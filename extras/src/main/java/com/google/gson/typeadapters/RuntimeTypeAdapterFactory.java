@@ -155,11 +155,11 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
   }
 
   /**
-   * Creates a new runtime type adapter for {@code baseType} using {@code "type"} as
+   * Creates a new runtime type adapter for {@code baseType} using {@code "@type"} as
    * the type field name.
    */
   public static <T> RuntimeTypeAdapterFactory<T> of(Class<T> baseType) {
-    return new RuntimeTypeAdapterFactory<T>(baseType, "type", false);
+    return new RuntimeTypeAdapterFactory<T>(baseType, "@type", false);
   }
 
   /**
@@ -193,7 +193,7 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
   }
 
   public <R> TypeAdapter<R> create(Gson gson, TypeToken<R> type) {
-    if (type.getRawType() != baseType) {
+    if (type.getRawType() != baseType && !subtypeToLabel.keySet().contains(type.getRawType())) {
       return null;
     }
 
